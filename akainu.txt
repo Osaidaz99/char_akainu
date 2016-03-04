@@ -48,3 +48,33 @@ airjump.height = 35
 yaccel = .44        
 stand.friction = .85  
 crouch.friction = .82 
+Walk
+[Statedef 20]
+type    = S
+physics = S
+sprpriority = 0
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = animelem  = 4
+trigger2 = animelem  = 8
+value = S52,0
+volume = 255
+channel = -1
+
+[State 20, 1]
+type = VelSet
+trigger1 = command = "holdfwd"
+x = const(velocity.walk.fwd.x)
+
+[State 20, 2]
+type = VelSet
+trigger1 = command = "holdback"
+x = const(velocity.walk.back.x)
+
+[State 20, 3]
+type = ChangeAnim
+triggerall = vel x > 0
+trigger1 = Anim != 20 && Anim != 5
+trigger2 = Anim = 5 && AnimTime = 0
+value = 20
