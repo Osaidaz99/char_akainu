@@ -30,15 +30,21 @@ shadowoffset = 0
 draw.offset = 0,0
 
 [Velocity]
-walk.fwd  = 2    ;Walk forward
-walk.back = -1.7     ;Walk backward
-run.fwd  = 8,0   ;Run forward (x, y)
-run.back = -8,0 ;Hop backward (x, y)
-jump.neu = 0,-10    ;Neutral jumping velocity (x, y)
-jump.back = -2.55    ;Jump back Speed (x, y)
-jump.fwd = 3.5       ;Jump forward Speed (x, y)
-runjump.back = -2.55,-8.1 ;Running jump speeds (opt)
-runjump.fwd = 4,-8.1     ;.
-airjump.neu = 0,-8.1     ;.
-airjump.back = -2.55      ;Air jump speeds (opt)
-airjump.fwd = 3.5         ;.
+walk.fwd  = 2    
+walk.back = -1.7     
+run.fwd  = 8,0   
+run.back = -8,0 
+jump.neu = 0,-10    
+jump.back = -2.55    
+jump.fwd = 3.5      
+runjump.back = -2.55,-8.1 
+runjump.fwd = 4,-8.1     
+airjump.neu = 0,-8.1     
+airjump.back = -2.55      
+airjump.fwd = 3.5         
+[Movement]
+airjump.num = 0     
+airjump.height = 35  
+yaccel = .44        
+stand.friction = .85  
+crouch.friction = .82 
