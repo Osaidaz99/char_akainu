@@ -78,3 +78,196 @@ triggerall = vel x > 0
 trigger1 = Anim != 20 && Anim != 5
 trigger2 = Anim = 5 && AnimTime = 0
 value = 20
+[State 20, 4]
+type = ChangeAnim
+triggerall = vel x < 0
+trigger1 = Anim != 21 && Anim != 5
+trigger2 = Anim = 5 && AnimTime = 0
+value = 21
+
+
+
+[Statedef 40]
+type = S
+physics = S
+anim = 40
+ctrl = 0
+sprpriority = 1
+
+[State 40, 1]
+type = VarSet
+trigger1 = Time = 0
+sysvar(1) = 0
+
+[State 40, 2]
+type = VarSet
+trigger1 = Time = 0
+var(5) = 0
+
+[State 40, longjump];ロングジャンプ
+type = VarSet
+triggerall = var(59) <= 0
+trigger1 = command = "longjump"
+trigger2 = prevstateno = 101 && command = "holdfwd"
+trigger3 = prevstateno = 420 && command = "holdup"
+trigger4 = prevstateno = 920 && command = "holdup"
+trigger5 = prevstateno = 2401 && command = "holdup"
+var(5) = 1
+
+[State 40, 4]
+type = VarSet
+trigger1 = var(59) <= 0
+trigger1 = command = "holdfwd"
+trigger2 = var(59) >= 1
+trigger2 = p2Movetype = H || Random <= 500
+sysvar(1) = 1
+
+[State 40, 5]
+type = VarSet
+trigger1 = var(59) <= 0
+trigger1 = command = "holdback"
+trigger2 = var(59) >= 1
+trigger2 = p2Movetype != H
+sysvar(1) = -1
+
+[State 40, 6]
+type = VelSet
+trigger1 = AnimTime = 0
+x = ifelse(sysvar(1)=0, const(velocity.jump.neu.x), ifelse(sysvar(1)=1, const(velocity.jump.fwd.x), const(velocity.jump.back.x)))
+y = const(velocity.jump.y)
+
+[State 40, 10]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 50
+ctrl = 1
+
+; --------------------上方ジャンプ
+[Statedef 50]
+type    = A
+physics = A
+
+[State 50, 1]
+type = VarSet
+trigger1 = Time = 0
+sysvar(1) = 0
+
+[State 50, 2]
+type = VelSet
+trigger1 = Time = 0 && Var(5)
+x = IfElse(vel x = 0,0,IfElse(vel x < 0,-5,6))
+y = -12
+
+[State 50, 3]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse((vel x)=0, 41, ifelse((vel x)>0, 42, 43))
+
+
+[State 50, 4];残像
+type = AfterImage
+triggerall = Var(10) !=0
+trigger1 = Time = 0 && Var(5) && Vel X != 0
+time = 10
+trans = add1
+timegap = 1
+framegap = 2
+length = 8
+palbright = 12,12,12
+palcontrast = 225,225,225
+palpostbright = 0,0,0
+paladd = 0,0,0
+palmul = 1,1,1
+
+[State 50,line1];スピードライン１
+type = Explod
+triggerall = Var(5) && Vel X != 0
+trigger1 = Time % 4 = 0 && Time < 30  
+anim = 8203  
+postype = p1
+pos = 10, -60
+velocity = 0, 0
+accel = 0, 0
+random = 20, 20
+removetime = -2
+ownpal = 1
+
+[State 50, line2];スピードライン２
+type = Explod
+triggerall = Var(5) && Vel X != 0
+trigger1 = Time % 4 = 0 && Time < 30  
+anim = 8202  
+postype = p1
+pos = -5, -40
+velocity = 0, 0
+accel = 0, 0
+random = 20, 20
+removetime = -2
+ownpal = 1
+
+[State 50, line3];スピードライン３
+type = Explod
+triggerall = Var(5) && Vel X != 0
+trigger1 = Time % 4 = 0 && Time < 30  
+anim = 8201  
+postype = p1
+pos = -10, -60
+velocity = 0, 0
+accel = 0, 0
+random = 20, 20
+removetime = -2
+ownpal = 1
+
+[State 50, line4];スピードライン４
+type = Explod
+triggerall = Var(5) && Vel X != 0
+trigger1 = Time % 4 = 0 && Time > 22 && Time < 34
+anim = 8200
+postype = p1
+pos = 5, -40
+velocity = 0, 0
+accel = 0, 0
+random = 40, 15
+removetime = -2
+ownpal = 1
+
+; ------------------ジャンプ着地
+[Statedef 52]
+type    = S
+physics = S
+ctrl = 0
+anim = 47
+velset = 0,0
+facep2 = 1
+
+[State 52, Landing Sound]
+type = PlaySnd
+trigger1 = Time = 0
+value = 52, 0
+
+[State 52, ctrl1]
+type = CtrlSet
+triggerall = Time = 1
+trigger1 = PrevStateNo != [670,680]
+value = 1
+
+[State 52, 1]
+type = VelSet
+trigger1 = Time = 0
+y = 0
+
+[State 52, 2]
+type = PosSet
+trigger1 = Time = 0
+y = 0
+
+[State 52, 3]
+type = CtrlSet
+trigger1 = Time = 3
+value = 1
+
+[State 52, 4]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
